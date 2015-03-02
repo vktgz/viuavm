@@ -95,6 +95,10 @@ build/program.o: src/program.cpp
 	${CXX} ${CXXFLAGS} -c -o $@ ./src/program.cpp
 
 
+build/memory.o: src/memory.cpp
+	${CXX} ${CXXFLAGS} -c -o $@ ./src/memory.cpp
+
+
 build/support/string.o: src/support/string.cpp
 	${CXX} ${CXXFLAGS} -c -o $@ ./src/support/string.cpp
 
