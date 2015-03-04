@@ -334,7 +334,7 @@ tuple<string, string, string> get3operands(string s, bool fill_third = true) {
 }
 
 
-/*  This is a mapping of instructions to their assembly functions.
+/*  This is a mapping of instructions to their assembling functions.
  *  Used in the assembly() function.
  *
  *  It is suitable for all instructions which use three, simple register-index operands.
