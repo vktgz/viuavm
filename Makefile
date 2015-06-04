@@ -61,10 +61,10 @@ test: ${VM_CPU} ${VM_ASM} clean-test-compiles
 	python3 ./tests/tests.py --verbose --catch --failfast
 
 
-${VM_CPU}: src/front/cpu.cpp build/cpu/cpu.o build/cpu/registserset.o build/loader.o build/printutils.o build/support/pointer.o build/support/string.o ${VIUA_CPU_INSTR_FILES_O} build/types/vector.o build/types/closure.o build/types/string.o build/types/exception.o
+${VM_CPU}: src/front/cpu.cpp build/cpu/cpu.o build/cpu/registserset.o build/loader.o build/printutils.o build/support/pointer.o build/support/string.o ${VIUA_CPU_INSTR_FILES_O} build/types/vector.o build/types/closure.o build/types/function.o build/types/string.o build/types/exception.o
 	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} -ldl -o ${VM_CPU} $^
 
-${VM_WDB}: src/front/wdb.cpp build/lib/linenoise.o build/cpu/cpu.o build/cpu/registserset.o build/loader.o build/printutils.o build/support/pointer.o build/support/string.o ${VIUA_CPU_INSTR_FILES_O} build/types/vector.o build/types/closure.o build/types/string.o build/types/exception.o
+${VM_WDB}: src/front/wdb.cpp build/lib/linenoise.o build/cpu/cpu.o build/cpu/registserset.o build/loader.o build/printutils.o build/support/pointer.o build/support/string.o ${VIUA_CPU_INSTR_FILES_O} build/types/vector.o build/types/closure.o build/types/function.o build/types/string.o build/types/exception.o
 	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} -ldl -o ${VM_WDB} $^
 
 ${VM_ASM}: src/front/asm.cpp build/program.o build/programinstructions.o build/assembler/operands.o build/assembler/ce.o build/assembler/verify.o build/loader.o build/support/string.o
@@ -97,6 +97,9 @@ build/types/vector.o: src/types/vector.cpp src/types/vector.h
 	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} -c -o $@ $<
 
 build/types/closure.o: src/types/closure.cpp src/types/closure.h
+	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} -c -o $@ $<
+
+build/types/function.o: src/types/function.cpp src/types/function.h
 	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} -c -o $@ $<
 
 build/types/string.o: src/types/string.cpp src/types/string.h
