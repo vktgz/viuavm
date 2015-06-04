@@ -968,7 +968,7 @@ int main(int argc, char* argv[]) {
         cout << report << endl;
         exit(1);
     }
-    if ((report = assembler::verify::closureCreations(lines, function_names)).size()) {
+    if ((report = assembler::verify::callableCreations(lines, function_names)).size()) {
         cout << report << endl;
         exit(1);
     }
