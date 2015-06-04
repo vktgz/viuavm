@@ -7,8 +7,8 @@ using namespace std;
 
 Closure::Closure():
     arguments(0), argreferences(0), arguments_size(0),
-    regset(0),
-    function_name("") {
+    function_name(""),
+    regset(0) {
 }
 
 Closure::~Closure() {
