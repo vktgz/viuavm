@@ -28,24 +28,44 @@ nvim ./some_file.asm
 
 # Development
 
-Some development-related information.
-Required tools:
+----
 
-* `g++`: GNU Compiler Collection's C++ compiler version 4.9 and above (mandatory),
-* `clang++`: clang C++ compiler version 3.6.1 and above (if not using GCC),
-* `python`: Python programming language 3.x for test suite (optional),
-* `valgrind`: for memory leak testing (optional),
+## Tools and libraries
 
+### C++11 Compiler
+
+GNU Compiler Collection's C++ compiler version 4.9 and above, or
+clang C++ compiler version 3.6.1 and above.
+Clang is tested less frequently.
+
+
+### OpenSSL
+
+OpenSSL version supplying `<openssl/sha.h>` header, and providing `SHA256()` and `SHA512()` functions.
+
+
+### Valgrind (optional)
+
+Valgrind is used for debugging memory leaks.
+
+
+### Python 3 (optional)
+
+Test suite is written in Python 3.
+
+
+----
 
 ## Compilation
 
 Before compiling, Git submodule for `linenoise` library must be initialised.
 
 Compilation is simple and can be executed by typing `make` in the shell.
-Full, clean compilation can also be performed by the `recompile` script located in main directory of the
-repository.
-The script will run `make clean` production, detect number of cores the machine compilation is done on has, and
-run `make` with `-j` option adjusted to take advantage of multithreaded `make`-ing.
+
+Alternatively, `./scripts/recompile` can be executed to get a rebuild, or
+`./scripts/compile` to build only changed parts.
+Both scripts will detect number of cores on the machine used for compilation and
+adjust make's `-j` option accordingly.
 
 
 ## Testing

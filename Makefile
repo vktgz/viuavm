@@ -68,7 +68,7 @@ bin/vm/vdb: src/front/wdb.cpp build/lib/linenoise.o build/cpu/cpu.o build/cpu/di
 	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} -ldl -o $@ $^
 
 bin/vm/asm: src/front/asm.cpp build/program.o build/programinstructions.o build/cg/assembler/operands.o build/cg/assembler/ce.o build/cg/assembler/verify.o build/loader.o build/support/string.o
-	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} -o $@ $^
+	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} -lssl -lcrypto -o $@ $^
 
 bin/vm/dis: src/front/dis.cpp build/loader.o build/cg/disassembler/disassembler.o build/support/pointer.o build/support/string.o
 	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} -o $@ $^
