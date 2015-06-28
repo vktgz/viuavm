@@ -112,7 +112,6 @@ tuple<string, unsigned> disassembler::instruction(byte* ptr) {
         case FTOI:
         case STOI:
         case STOF:
-        case STRSIZE:
         case FRAME:
         case ARG:
         case PARAM:
@@ -160,32 +159,12 @@ tuple<string, unsigned> disassembler::instruction(byte* ptr) {
         case BGT:
         case BGTE:
         case BEQ:
-        case STRADD:
-        case STRJOIN:
         case STREQ:
         case AND:
         case OR:
         case VINSERT:
         case VPOP:
         case VAT:
-            oss << " " << intop(ptr);
-            pointer::inc<bool, byte>(ptr);
-            pointer::inc<int, byte>(ptr);
-
-            oss << " " << intop(ptr);
-            pointer::inc<bool, byte>(ptr);
-            pointer::inc<int, byte>(ptr);
-
-            oss << " " << intop(ptr);
-            pointer::inc<bool, byte>(ptr);
-            pointer::inc<int, byte>(ptr);
-
-            break;
-        case STRSUB:
-            oss << " " << intop(ptr);
-            pointer::inc<bool, byte>(ptr);
-            pointer::inc<int, byte>(ptr);
-
             oss << " " << intop(ptr);
             pointer::inc<bool, byte>(ptr);
             pointer::inc<int, byte>(ptr);
@@ -260,7 +239,9 @@ tuple<string, unsigned> disassembler::instruction(byte* ptr) {
             }
             break;
         default:
+            // if opcode was not covered here, it means it must have been a variable-length opcode
             oss << "";
     }
+
     return tuple<string, unsigned>(oss.str(), increase);
 }

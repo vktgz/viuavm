@@ -4,6 +4,7 @@
 #include <tuple>
 #include <map>
 #include <algorithm>
+#include "../../bytecode/maps.h"
 #include "../../support/string.h"
 #include "../../program.h"
 #include "assembler.h"
@@ -23,7 +24,7 @@ string assembler::verify::functionCalls(const vector<string>& lines, const vecto
         bool is_undefined = (find(function_names.begin(), function_names.end(), function) == function_names.end());
 
         if (is_undefined) {
-            report << "fatal: call to undefined function '" << function << "' at line " << i;
+            report << "fatal: call to undefined function '" << function << "' at line " << (i+1);
         }
     }
     return report.str();
@@ -42,7 +43,7 @@ string assembler::verify::blockTries(const vector<string>& lines, const vector<s
         bool is_undefined = (find(block_names.begin(), block_names.end(), block) == block_names.end());
 
         if (is_undefined) {
-            report << "fatal: try of undefined block '" << block << "' at line " << i;
+            report << "fatal: try of undefined block '" << block << "' at line " << (i+1);
         }
     }
     return report.str();
@@ -64,7 +65,7 @@ string assembler::verify::callableCreations(const vector<string>& lines, const v
         bool is_undefined = (find(function_names.begin(), function_names.end(), function) == function_names.end());
 
         if (is_undefined) {
-            report << "fatal: " << callable_type << " from undefined function '" << function << "' at line " << i;
+            report << "fatal: " << callable_type << " from undefined function '" << function << "' at line " << (i+1);
             break;
         }
 
@@ -104,11 +105,11 @@ string assembler::verify::ressInstructions(const vector<string>& lines, bool as_
         string registerset_name = str::chunk(str::lstrip(str::sub(line, str::chunk(line).size())));
 
         if (find(legal_register_sets.begin(), legal_register_sets.end(), registerset_name) == legal_register_sets.end()) {
-            report << "fatal: illegal register set name in ress instruction: '" << registerset_name << "' at line " << i;
+            report << "fatal: illegal register set name in ress instruction: '" << registerset_name << "' at line " << (i+1);
             break;
         }
         if (registerset_name == "global" and as_lib and function != "main") {
-            report << "fatal: global registers used in library function at line " << i;
+            report << "fatal: global registers used in library function at line " << (i+1);
             break;
         }
     }
@@ -122,6 +123,41 @@ string assembler::verify::functionBodiesAreNonempty(const vector<string>& lines,
         vector<string> flines = function.second;
         if (flines.size() == 0) {
             report << "fatal: function '" + function.first + "' is empty" << endl;
+            break;
+        }
+    }
+    return report.str();
+}
+
+string assembler::verify::directives(const vector<string>& lines) {
+    ostringstream report("");
+    string line;
+    for (unsigned i = 0; i < lines.size(); ++i) {
+        line = str::lstrip(lines[i]);
+        if (line.size() == 0 or line[0] != '.') {
+            continue;
+        }
+
+        string token = str::chunk(line);
+        if (not (token == ".function:" or token == ".block:" or token == ".end" or token == ".name:" or token == ".mark:" or token == ".main:")) {
+            report << "fatal: unrecognised assembler directive on line " << (i+1) << ": `" << token << '`';
+            break;
+        }
+    }
+    return report.str();
+}
+string assembler::verify::instructions(const vector<string>& lines) {
+    ostringstream report("");
+    string line;
+    for (unsigned i = 0; i < lines.size(); ++i) {
+        line = str::lstrip(lines[i]);
+        if (line.size() == 0 or line[0] == '.' or line[0] == ';') {
+            continue;
+        }
+
+        string token = str::chunk(line);
+        if (OP_SIZES.count(token) == 0) {
+            report << "fatal: unrecognised instruction on line " << (i+1) << ": `" << token << '`';
             break;
         }
     }
