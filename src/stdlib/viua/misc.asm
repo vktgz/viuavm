@@ -33,8 +33,12 @@
     .mark: loop_begin
     ; counting from N to zero
     ; when 0 is reached, stop iterating
-    igt 3 0 1
+    ;igt 3 0 1
+    frame 1
+    param 0 0
+    call 3 misc::boolean
     branch 3 loop_body loop_end
+    free 3
 
     .mark: loop_body
 
