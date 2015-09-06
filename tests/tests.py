@@ -730,7 +730,11 @@ def twoSameLines(self, excode, output):
     self.assertEqual(lines[0], lines[1])
 
 class PointersTests(unittest.TestCase):
-    pass
+    PATH = './sample/asm/pointers'
+
+    @unittest.skip('')
+    def testPassByPointer(self):
+        runTestCustomAssertsNoDisassemblyRerun(self, 'represent_by_pointer.asm', twoSameLines)
 
 
 class StandardRuntimeLibraryModuleString(unittest.TestCase):
