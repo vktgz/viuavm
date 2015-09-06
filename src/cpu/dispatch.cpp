@@ -132,6 +132,12 @@ byte* CPU::dispatch(byte* addr) {
         case REF:
             addr = ref(addr+1);
             break;
+        case PTR:
+            addr = ptr(addr+1);
+            break;
+        case DEPTR:
+            addr = deptr(addr+1);
+            break;
         case SWAP:
             addr = swap(addr+1);
             break;
