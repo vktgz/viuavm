@@ -75,6 +75,10 @@ enum OPCODE : byte {
     MOVE,   // move an object from one register to another
     COPY,   // copy an object from one register to another
     REF,    // create a reference to an object
+    PTR,    // create a pointer to an object
+    DEPTR,  // "depointerise" a pointer, i.e. store the object it points to in a register
+            // CAUTION! the programmer is responsible for emptying the register containing such depointered object
+            // with "empty" instruction
     SWAP,   // swap two objects between registers
     FREE,   // delete an object from a register, freeing the memory
     EMPTY,  // empty the register and set its flags to 0
