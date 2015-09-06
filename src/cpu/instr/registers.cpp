@@ -1,6 +1,7 @@
 #include <iostream>
 #include <viua/types/boolean.h>
 #include <viua/types/reference.h>
+#include <viua/types/pointer.h>
 #include <viua/support/pointer.h>
 #include <viua/exceptions.h>
 #include <viua/cpu/cpu.h>
@@ -98,6 +99,64 @@ byte* CPU::ref(byte* addr) {
         uregset->empty(object_operand_index);
         uregset->set(object_operand_index, rf);
         uregset->set(destination_register_index, rf->copy());
+    }
+
+    return addr;
+}
+byte* CPU::ptr(byte* addr) {
+    /** Run ptr instruction.
+     */
+    int object_operand_index, destination_register_index;
+    bool object_operand_ref = false, destination_register_ref = false;
+
+    destination_register_ref = *((bool*)addr);
+    pointer::inc<bool, byte>(addr);
+    destination_register_index = *((int*)addr);
+    pointer::inc<int, byte>(addr);
+
+    object_operand_ref = *((bool*)addr);
+    pointer::inc<bool, byte>(addr);
+    object_operand_index = *((int*)addr);
+    pointer::inc<int, byte>(addr);
+
+    if (object_operand_ref) {
+        object_operand_index = static_cast<Integer*>(fetch(object_operand_index))->value();
+    }
+    if (destination_register_ref) {
+        destination_register_index = static_cast<Integer*>(fetch(destination_register_index))->value();
+    }
+
+    uregset->set(destination_register_index, new Pointer(fetch(object_operand_index)));
+
+    return addr;
+}
+byte* CPU::deptr(byte* addr) {
+    /** Run deptr instruction.
+     */
+    int object_operand_index, destination_register_index;
+    bool object_operand_ref = false, destination_register_ref = false;
+
+    destination_register_ref = *((bool*)addr);
+    pointer::inc<bool, byte>(addr);
+    destination_register_index = *((int*)addr);
+    pointer::inc<int, byte>(addr);
+
+    object_operand_ref = *((bool*)addr);
+    pointer::inc<bool, byte>(addr);
+    object_operand_index = *((int*)addr);
+    pointer::inc<int, byte>(addr);
+
+    if (object_operand_ref) {
+        object_operand_index = static_cast<Integer*>(fetch(object_operand_index))->value();
+    }
+    if (destination_register_ref) {
+        destination_register_index = static_cast<Integer*>(fetch(destination_register_index))->value();
+    }
+
+    if (Pointer* ptr = dynamic_cast<Pointer*>(fetch(object_operand_index))) {
+        uregset->set(destination_register_index, ptr->pointsTo());
+    } else {
+        throw new Exception("not a pointer");
     }
 
     return addr;

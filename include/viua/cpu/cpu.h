@@ -188,6 +188,8 @@ class CPU {
     byte* move(byte*);
     byte* copy(byte*);
     byte* ref(byte*);
+    byte* ptr(byte*);
+    byte* deptr(byte*);
     byte* swap(byte*);
     byte* free(byte*);
     byte* empty(byte*);
