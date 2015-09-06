@@ -728,6 +728,10 @@ def twoSameLines(self, excode, output):
     lines = output.splitlines()
     self.assertEqual(lines[0], lines[1])
 
+class PointersTests(unittest.TestCase):
+    pass
+
+
 class StandardRuntimeLibraryModuleString(unittest.TestCase):
     PATH = './sample/standard_library/string'
 
