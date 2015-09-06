@@ -33,4 +33,4 @@ Pointer* Pointer::copy() const {
 }
 
 Pointer::Pointer(Type *ptr): pointer(ptr) {}
-Pointer::~Pointer() { delete pointer; }
+Pointer::~Pointer() {}
