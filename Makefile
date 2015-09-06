@@ -95,7 +95,7 @@ uninstall:
 
 ############################################################
 # PLATFORM OBJECT FILES
-platform: build/platform/exception.o build/platform/string.o build/platform/vector.o build/platform/registerset.o build/platform/support_string.o build/platform/reference.o
+platform: build/platform/exception.o build/platform/string.o build/platform/vector.o build/platform/registerset.o build/platform/support_string.o build/platform/reference.o build/platform/pointer.o
 
 build/platform/exception.o: src/types/exception.cpp
 	${CXX} -std=c++11 -fPIC -c -I./include -o ./build/platform/exception.o src/types/exception.cpp
@@ -108,6 +108,9 @@ build/platform/vector.o: src/types/vector.cpp
 
 build/platform/reference.o: src/types/reference.cpp
 	${CXX} -std=c++11 -fPIC -c -I./include -o ./build/platform/reference.o src/types/reference.cpp
+
+build/platform/pointer.o: src/types/pointer.cpp
+	${CXX} -std=c++11 -fPIC -c -I./include -o ./build/platform/pointer.o src/types/pointer.cpp
 
 build/platform/registerset.o: src/cpu/registerset.cpp
 	${CXX} -std=c++11 -fPIC -c -I./include -o ./build/platform/registerset.o src/cpu/registerset.cpp
@@ -169,10 +172,10 @@ build/dis.o: src/front/dis.cpp
 build/wdb.o: src/front/wdb.cpp
 	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} -c -o $@ $^
 
-build/bin/vm/cpu: build/cpu.o build/cpu/cpu.o build/cpu/dispatch.o build/cpu/registserset.o build/loader.o build/printutils.o build/support/pointer.o build/support/string.o build/support/env.o ${VIUA_CPU_INSTR_FILES_O} build/types/vector.o build/types/function.o build/types/closure.o build/types/string.o build/types/exception.o build/types/prototype.o build/types/object.o build/types/reference.o
+build/bin/vm/cpu: build/cpu.o build/cpu/cpu.o build/cpu/dispatch.o build/cpu/registserset.o build/loader.o build/printutils.o build/support/pointer.o build/support/string.o build/support/env.o ${VIUA_CPU_INSTR_FILES_O} build/types/vector.o build/types/function.o build/types/closure.o build/types/string.o build/types/exception.o build/types/prototype.o build/types/object.o build/types/reference.o build/types/pointer.o
 	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} ${DYNAMIC_SYMS} -o $@ $^ $(LIBDL)
 
-build/bin/vm/vdb: build/wdb.o build/lib/linenoise.o build/cpu/cpu.o build/cpu/dispatch.o build/cpu/registserset.o build/loader.o build/cg/disassembler/disassembler.o build/printutils.o build/support/pointer.o build/support/string.o build/support/env.o ${VIUA_CPU_INSTR_FILES_O} build/types/vector.o build/types/function.o build/types/closure.o build/types/string.o build/types/exception.o build/types/prototype.o build/types/object.o build/types/reference.o
+build/bin/vm/vdb: build/wdb.o build/lib/linenoise.o build/cpu/cpu.o build/cpu/dispatch.o build/cpu/registserset.o build/loader.o build/cg/disassembler/disassembler.o build/printutils.o build/support/pointer.o build/support/string.o build/support/env.o ${VIUA_CPU_INSTR_FILES_O} build/types/vector.o build/types/function.o build/types/closure.o build/types/string.o build/types/exception.o build/types/prototype.o build/types/object.o build/types/reference.o build/types/pointer.o
 	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} ${DYNAMIC_SYMS} -o $@ $^ $(LIBDL)
 
 build/bin/vm/asm: build/asm.o build/asm/generate.o build/asm/gather.o build/asm/decode.o build/program.o build/programinstructions.o build/cg/tokenizer/tokenize.o build/cg/assembler/operands.o build/cg/assembler/ce.o build/cg/assembler/verify.o build/cg/bytecode/instructions.o build/loader.o build/support/string.o build/support/env.o
@@ -247,6 +250,9 @@ build/types/object.o: src/types/object.cpp include/viua/types/object.h
 	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} -c -o $@ $<
 
 build/types/reference.o: src/types/reference.cpp include/viua/types/reference.h
+	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} -c -o $@ $<
+
+build/types/pointer.o: src/types/pointer.cpp include/viua/types/pointer.h
 	${CXX} ${CXXFLAGS} ${CXXOPTIMIZATIONFLAGS} -c -o $@ $<
 
 ############################################################
