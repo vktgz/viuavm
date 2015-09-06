@@ -448,6 +448,30 @@ Program& Program::ref(int_op a, int_op b) {
     return (*this);
 }
 
+Program& Program::ptr(int_op a, int_op b) {
+    /*  Inserts ptr instruction to bytecode.
+     *
+     *  :params:
+     *
+     *  a - register number
+     *  b - register number
+     */
+    addr_ptr = cg::bytecode::ptr(addr_ptr, a, b);
+    return (*this);
+}
+
+Program& Program::deptr(int_op a, int_op b) {
+    /*  Inserts deptr instruction to bytecode.
+     *
+     *  :params:
+     *
+     *  a - register number
+     *  b - register number
+     */
+    addr_ptr = cg::bytecode::deptr(addr_ptr, a, b);
+    return (*this);
+}
+
 Program& Program::swap(int_op a, int_op b) {
     /*  Inserts swap instruction to bytecode.
      *
