@@ -68,6 +68,8 @@ namespace cg {
         byte* move(byte*, int_op, int_op);
         byte* copy(byte*, int_op, int_op);
         byte* ref(byte*, int_op, int_op);
+        byte* ptr(byte*, int_op, int_op);
+        byte* deptr(byte*, int_op, int_op);
         byte* swap(byte*, int_op, int_op);
         byte* free(byte*, int_op);
         byte* empty(byte*, int_op);
