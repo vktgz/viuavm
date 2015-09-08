@@ -510,6 +510,18 @@ Program& Program::isnull(int_op a, int_op b) {
     return (*this);
 }
 
+Program& Program::isptr(int_op a, int_op b) {
+    /*  Inserts isptr instruction to bytecode.
+     *
+     *  :params:
+     *
+     *  a - register number
+     *  b - register number
+     */
+    addr_ptr = cg::bytecode::isptr(addr_ptr, a, b);
+    return (*this);
+}
+
 Program& Program::ress(string a) {
     /*  Inserts ress instruction to bytecode.
      *
