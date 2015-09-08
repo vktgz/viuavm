@@ -74,6 +74,7 @@ namespace cg {
         byte* free(byte*, int_op);
         byte* empty(byte*, int_op);
         byte* isnull(byte*, int_op, int_op);
+        byte* isptr(byte*, int_op, int_op);
         byte* ress(byte*, const std::string&);
         byte* tmpri(byte*, int_op);
         byte* tmpro(byte*, int_op);
