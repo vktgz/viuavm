@@ -137,8 +137,11 @@ tuple<string, unsigned> disassembler::instruction(byte* ptr) {
         case MOVE:
         case COPY:
         case REF:
+        case PTR:
+        case DEPTR:
         case SWAP:
         case ISNULL:
+        case ISPTR:
         case VPUSH:
         case VLEN:
         case FCALL:
