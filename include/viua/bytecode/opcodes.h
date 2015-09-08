@@ -83,6 +83,7 @@ enum OPCODE : byte {
     FREE,   // delete an object from a register, freeing the memory
     EMPTY,  // empty the register and set its flags to 0
     ISNULL, // checks if register is null (empty)
+    ISPTR,  // checks if register contains a pointer instead of a simple object
     RESS,   // REgister Set Switch - switches register set
     TMPRI,  // temporary register in - move object from current
             // register set into the temporary register
