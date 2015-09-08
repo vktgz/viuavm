@@ -150,6 +150,9 @@ byte* CPU::dispatch(byte* addr) {
         case ISNULL:
             addr = isnull(addr+1);
             break;
+        case ISPTR:
+            addr = isptr(addr+1);
+            break;
         case RESS:
             addr = ress(addr+1);
             break;
