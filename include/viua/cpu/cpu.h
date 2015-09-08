@@ -194,6 +194,7 @@ class CPU {
     byte* free(byte*);
     byte* empty(byte*);
     byte* isnull(byte*);
+    byte* isptr(byte*);
 
     byte* ress(byte*);
     byte* tmpri(byte*);

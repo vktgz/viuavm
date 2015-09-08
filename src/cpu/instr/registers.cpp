@@ -263,6 +263,33 @@ byte* CPU::isnull(byte* addr) {
 
     return addr;
 }
+byte* CPU::isptr(byte* addr) {
+    /** Run isptr instruction.
+     */
+    int checked_register_index, destination_register_index;
+    bool checked_register_ref = false, destination_register_ref = false;
+
+    destination_register_ref = *((bool*)addr);
+    pointer::inc<bool, byte>(addr);
+    destination_register_index = *((int*)addr);
+    pointer::inc<int, byte>(addr);
+
+    checked_register_ref = *((bool*)addr);
+    pointer::inc<bool, byte>(addr);
+    checked_register_index = *((int*)addr);
+    pointer::inc<int, byte>(addr);
+
+    if (checked_register_ref) {
+        checked_register_index = static_cast<Integer*>(fetch(checked_register_index))->value();
+    }
+    if (destination_register_ref) {
+        destination_register_index = static_cast<Integer*>(fetch(destination_register_index))->value();
+    }
+
+    place(destination_register_index, new Boolean(dynamic_cast<Pointer*>(uregset->at(checked_register_index))));
+
+    return addr;
+}
 
 byte* CPU::ress(byte* addr) {
     /*  Run ress instruction.
