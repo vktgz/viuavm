@@ -138,9 +138,9 @@ byte* CPU::paptr(byte* addr) {
 
     Type* object = uregset->at(object_operand_index);
     if (dynamic_cast<Pointer*>(object) == nullptr) {
-        frame_new->args->set(parameter_no_operand_index, object->copy());
-    } else {
         frame_new->args->set(parameter_no_operand_index, new Pointer(object));
+    } else {
+        frame_new->args->set(parameter_no_operand_index, object->copy());
     }
 
     return addr;
