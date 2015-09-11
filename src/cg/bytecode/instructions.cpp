@@ -693,6 +693,11 @@ namespace cg {
             return addr_ptr;
         }
 
+        byte* paptr(byte* addr_ptr, int_op a, int_op b) {
+            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, PAPTR, a, b);
+            return addr_ptr;
+        }
+
         byte* arg(byte* addr_ptr, int_op a, int_op b) {
             /*  Inserts arg instruction to bytecode.
              *
