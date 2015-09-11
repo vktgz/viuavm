@@ -12,6 +12,7 @@ Each unit passes if:
 Returning correct may mean raising an exception in some cases.
 """
 
+import functools
 import json
 import os
 import subprocess
@@ -730,12 +731,20 @@ def twoSameLines(self, excode, output):
     lines = output.splitlines()
     self.assertEqual(lines[0], lines[1])
 
+def sameLines(self, excode, output, no_of_lines):
+    lines = output.splitlines()
+    self.assertTrue(len(lines) == no_of_lines)
+    for i in range(1, no_of_lines):
+        self.assertEqual(lines[0], lines[i])
+
+def partiallyAppliedSameLines(n):
+    return functools.partial(sameLines, no_of_lines=n)
+
 class PointersTests(unittest.TestCase):
     PATH = './sample/asm/pointers'
 
-    @unittest.skip('')
     def testPassByPointer(self):
-        runTestCustomAssertsNoDisassemblyRerun(self, 'represent_by_pointer.asm', twoSameLines)
+        runTestCustomAssertsNoDisassemblyRerun(self, 'pass_by_pointer.asm', partiallyAppliedSameLines(3))
 
 
 class StandardRuntimeLibraryModuleString(unittest.TestCase):
