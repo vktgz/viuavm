@@ -189,6 +189,9 @@ byte* CPU::dispatch(byte* addr) {
         case PAREF:
             addr = paref(addr+1);
             break;
+        case PAPTR:
+            addr = paptr(addr+1);
+            break;
         case ARG:
             addr = arg(addr+1);
             break;
