@@ -727,10 +727,6 @@ class ExternalModulesTests(unittest.TestCase):
         runTestNoDisassemblyRerun(self, 'sqrt.asm', 1.73, 0, lambda o: round(float(o.strip()), 2))
 
 
-def twoSameLines(self, excode, output):
-    lines = output.splitlines()
-    self.assertEqual(lines[0], lines[1])
-
 def sameLines(self, excode, output, no_of_lines):
     lines = output.splitlines()
     self.assertTrue(len(lines) == no_of_lines)
@@ -751,10 +747,10 @@ class StandardRuntimeLibraryModuleString(unittest.TestCase):
     PATH = './sample/standard_library/string'
 
     def testStringifyFunction(self):
-        runTestCustomAssertsNoDisassemblyRerun(self, 'stringify.asm', twoSameLines)
+        runTestCustomAssertsNoDisassemblyRerun(self, 'stringify.asm', partiallyAppliedSameLines(2))
 
     def testRepresentFunction(self):
-        runTestCustomAssertsNoDisassemblyRerun(self, 'represent.asm', twoSameLines)
+        runTestCustomAssertsNoDisassemblyRerun(self, 'represent.asm', partiallyAppliedSameLines(2))
 
 
 if __name__ == '__main__':
