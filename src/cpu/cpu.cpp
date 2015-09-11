@@ -487,6 +487,10 @@ void CPU::loadForeignLibrary(const string& module) {
 vector<string> CPU::inheritanceChainOf(const string& type_name) {
     /** This methods returns full inheritance chain of a type.
      */
+    if (typesystem.count(type_name) == 0) {
+        throw new Exception(type_name + " is not a registered prototype");
+    }
+
     vector<string> ichain = typesystem.at(type_name)->getAncestors();
     for (unsigned i = 0; i < ichain.size(); ++i) {
         vector<string> sub_ichain = inheritanceChainOf(ichain[i]);
