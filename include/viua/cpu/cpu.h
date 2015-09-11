@@ -212,6 +212,7 @@ class CPU {
     byte* frame(byte*);
     byte* param(byte*);
     byte* paref(byte*);
+    byte* paptr(byte*);
     byte* arg(byte*);
     byte* argc(byte*);
 

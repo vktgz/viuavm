@@ -1,5 +1,6 @@
 #include <viua/types/boolean.h>
 #include <viua/types/reference.h>
+#include <viua/types/pointer.h>
 #include <viua/support/pointer.h>
 #include <viua/exceptions.h>
 #include <viua/cpu/cpu.h>
@@ -104,6 +105,43 @@ byte* CPU::paref(byte* addr) {
     }
     /* frame_new->args->set(parameter_no_operand_index, fetch(object_operand_index)); */
     /* frame_new->args->flag(parameter_no_operand_index, REFERENCE); */
+
+    return addr;
+}
+
+byte* CPU::paptr(byte* addr) {
+    /** Run paptr instruction.
+     */
+    int parameter_no_operand_index, object_operand_index;
+    bool parameter_no_operand_ref = false, object_operand_ref = false;
+
+    parameter_no_operand_ref = *((bool*)addr);
+    pointer::inc<bool, byte>(addr);
+    parameter_no_operand_index = *((int*)addr);
+    pointer::inc<int, byte>(addr);
+
+    object_operand_ref = *((bool*)addr);
+    pointer::inc<bool, byte>(addr);
+    object_operand_index = *((int*)addr);
+    pointer::inc<int, byte>(addr);
+
+    if (parameter_no_operand_ref) {
+        parameter_no_operand_index = static_cast<Integer*>(fetch(parameter_no_operand_index))->value();
+    }
+    if (object_operand_ref) {
+        object_operand_index = static_cast<Integer*>(fetch(object_operand_index))->value();
+    }
+
+    if (unsigned(parameter_no_operand_index) >= frame_new->args->size()) {
+        throw new Exception("parameter register index out of bounds (greater than arguments set size) while adding parameter");
+    }
+
+    Type* object = uregset->at(object_operand_index);
+    if (dynamic_cast<Pointer*>(object) == nullptr) {
+        frame_new->args->set(parameter_no_operand_index, object->copy());
+    } else {
+        frame_new->args->set(parameter_no_operand_index, new Pointer(object));
+    }
 
     return addr;
 }
