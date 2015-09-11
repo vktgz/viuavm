@@ -620,6 +620,18 @@ Program& Program::paref(int_op a, int_op b) {
     return (*this);
 }
 
+Program& Program::paptr(int_op a, int_op b) {
+    /*  Inserts paptr instruction to bytecode.
+     *
+     *  :params:
+     *
+     *  a - register number
+     *  b - register number
+     */
+    addr_ptr = cg::bytecode::paptr(addr_ptr, a, b);
+    return (*this);
+}
+
 Program& Program::arg(int_op a, int_op b) {
     /*  Inserts arg instruction to bytecode.
      *
