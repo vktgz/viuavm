@@ -58,5 +58,5 @@ void Object::get(Frame* frame, RegisterSet*, RegisterSet*) {
 }
 
 
-Object::Object(const std::string& tn): type_name(tn) {}
+Object::Object(const string& tn): type_name(tn) {}
 Object::~Object() {}

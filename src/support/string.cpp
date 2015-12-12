@@ -7,26 +7,26 @@ using namespace std;
 
 
 namespace str {
-    bool startswith(const std::string& s, const std::string& w) {
+    bool startswith(const string& s, const string& w) {
         /*  Returns true if s stars with w.
          */
         return (s.compare(0, w.length(), w) == 0);
     }
 
-    bool startswithchunk(const std::string& s, const std::string& w) {
+    bool startswithchunk(const string& s, const string& w) {
         /*  Returns true if s stars with chunk w.
          */
         return (chunk(s) == w);
     }
 
-    bool endswith(const std::string& s, const std::string& w) {
+    bool endswith(const string& s, const string& w) {
         /*  Returns true if s ends with w.
          */
         return (s.compare(s.length()-w.length(), s.length(), w) == 0);
     }
 
 
-    bool isnum(const std::string& s, bool negatives) {
+    bool isnum(const string& s, bool negatives) {
         /*  Returns true if s contains only numerical characters.
          *  Regex equivalent: `^[0-9]+$`
          */
@@ -58,7 +58,7 @@ namespace str {
         return num;
     }
 
-    bool isfloat(const std::string& s, bool negatives) {
+    bool isfloat(const string& s, bool negatives) {
         /*  Returns true if s contains only numerical characters.
          *  Regex equivalent: `^[0-9]+\.[0-9]+$`
          */
