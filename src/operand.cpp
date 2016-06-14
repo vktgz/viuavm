@@ -24,6 +24,12 @@ unsigned viua::operand::RegisterIndex::get(Process*) const {
 }
 
 
+Type* viua::operand::Int::resolve(Process* t) {
+    // FIXME: throw exception if integer is negative
+    return t->obtain(static_cast<unsigned>(integer));
+}
+
+
 Type* viua::operand::RegisterReference::resolve(Process* t) {
     return t->obtain(static_cast<Integer*>(t->obtain(index))->as_unsigned());
 }
@@ -57,6 +63,10 @@ unique_ptr<viua::operand::Operand> viua::operand::extract(byte*& ip) {
         case OT_ATOM:
             operand.reset(new Atom(string(reinterpret_cast<char*>(ip))));
             ip += (static_cast<Atom*>(operand.get())->get().size() + 1);
+            break;
+        case OT_PRIMITIVE_INT:
+            operand.reset(new Int(*reinterpret_cast<int*>(ip)));
+            ip += sizeof(int);
             break;
         default:
             throw OperandTypeException();

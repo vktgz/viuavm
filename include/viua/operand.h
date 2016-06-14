@@ -63,6 +63,7 @@ namespace viua {
                 int integer;
             public:
                 Type* resolve(Process*) override;
+                inline int get() const { return integer; }
 
                 Int(int i): integer(i) {}
         };
@@ -70,6 +71,7 @@ namespace viua {
         std::unique_ptr<viua::operand::Operand> extract(byte*& ip);
         std::string extractString(byte*& ip);
         unsigned getRegisterIndex(Operand*, Process*);
+        int getInteger(Operand*, Process*);
     }
 }
 
