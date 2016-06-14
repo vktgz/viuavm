@@ -32,6 +32,35 @@ static byte* insertIntegerOperand(byte* addr_ptr, int_op op) {
     return addr_ptr;
 }
 
+static byte* insertRegisterIndexOperand(byte* addr_ptr, int_op op) {
+    /** Insert integer operand into bytecode.
+     *
+     *  When using integer operand, it usually is a plain number - which translates to a regsiter index.
+     *  However, when preceded by `@` integer operand will not be interpreted directly, but instead CPU
+     *  will look into a register the integer points to, fetch an integer from this register and
+     *  use the fetched register as the operand.
+     */
+    bool ref;
+    int num;
+
+    tie(ref, num) = op;
+
+    /* NOTICE: reinterpret_cast<>'s are ugly, but we know what we're doing here.
+     * Since we store everything in a big array of bytes we have to cast incompatible pointers to
+     * actually put *valid* data inside it.
+     */
+    if (ref) {
+        *(reinterpret_cast<OperandType*>(addr_ptr)) = OT_REGISTER_REFERENCE;
+    } else {
+        *(reinterpret_cast<OperandType*>(addr_ptr)) = OT_REGISTER_INDEX;
+    }
+    pointer::inc<OperandType, byte>(addr_ptr);
+    *(reinterpret_cast<int*>(addr_ptr))  = num;
+    pointer::inc<int, byte>(addr_ptr);
+
+    return addr_ptr;
+}
+
 static byte* insertTwoIntegerOpsInstruction(byte* addr_ptr, enum OPCODE instruction, int_op a, int_op b) {
     /** Insert instruction with two integer operands.
      */
@@ -73,7 +102,7 @@ namespace cg {
             /*  Inserts izero instuction.
              */
             *(addr_ptr++) = IZERO;
-            addr_ptr = insertIntegerOperand(addr_ptr, regno);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regno);
             return addr_ptr;
         }
 
