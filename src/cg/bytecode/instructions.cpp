@@ -782,7 +782,7 @@ namespace cg {
             /*  Inserts function instuction.
              */
             *(addr_ptr++) = FUNCTION;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             addr_ptr = insertString(addr_ptr, fn);
             return addr_ptr;
         }
@@ -790,14 +790,18 @@ namespace cg {
         byte* opfcall(byte* addr_ptr, int_op clsr, int_op ret) {
             /*  Inserts fcall instruction to bytecode.
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, FCALL, clsr, ret);
+            *(addr_ptr++) = FCALL;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, clsr);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, ret);
             return addr_ptr;
         }
 
         byte* opframe(byte* addr_ptr, int_op a, int_op b) {
             /*  Inserts frame instruction to bytecode.
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, FRAME, a, b);
+            *(addr_ptr++) = FRAME;
+            addr_ptr = insertIntegerOperand(addr_ptr, a);
+            addr_ptr = insertIntegerOperand(addr_ptr, b);
             return addr_ptr;
         }
 
@@ -809,7 +813,9 @@ namespace cg {
              *  a - register number
              *  b - register number
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, PARAM, a, b);
+            *(addr_ptr++) = PARAM;
+            addr_ptr = insertIntegerOperand(addr_ptr, a);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, b);
             return addr_ptr;
         }
 
@@ -821,7 +827,9 @@ namespace cg {
              *  a - register number
              *  b - register number
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, PAMV, a, b);
+            *(addr_ptr++) = PAMV;
+            addr_ptr = insertIntegerOperand(addr_ptr, a);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, b);
             return addr_ptr;
         }
 
@@ -833,7 +841,9 @@ namespace cg {
              *  a - argument number
              *  b - register number
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, ARG, a, b);
+            *(addr_ptr++) = ARG;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, a);
+            addr_ptr = insertIntegerOperand(addr_ptr, b);
             return addr_ptr;
         }
 
@@ -845,7 +855,7 @@ namespace cg {
              *  a - target register
              */
             *(addr_ptr++) = ARGC;
-            addr_ptr = insertIntegerOperand(addr_ptr, a);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, a);
             return addr_ptr;
         }
 
@@ -854,7 +864,7 @@ namespace cg {
              *  Byte offset is calculated automatically.
              */
             *(addr_ptr++) = CALL;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             addr_ptr = insertString(addr_ptr, fn_name);
             return addr_ptr;
         }
