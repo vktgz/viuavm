@@ -457,7 +457,7 @@ namespace cg {
             tie(b_ref, bt) = b;
 
             *(addr_ptr++) = BSTORE;
-            addr_ptr = insertIntegerOperand(addr_ptr, regno);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regno);
             *(reinterpret_cast<bool*>(addr_ptr)) = b_ref;
             pointer::inc<bool, byte>(addr_ptr);
             *(addr_ptr) = bt;
@@ -469,28 +469,36 @@ namespace cg {
         byte* opitof(byte* addr_ptr, int_op a, int_op b) {
             /*  Inserts itof instruction to bytecode.
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, ITOF, a, b);
+            *(addr_ptr++) = ITOF;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, a);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, b);
             return addr_ptr;
         }
 
         byte* opftoi(byte* addr_ptr, int_op a, int_op b) {
             /*  Inserts ftoi instruction to bytecode.
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, FTOI, a, b);
+            *(addr_ptr++) = FTOI;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, a);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, b);
             return addr_ptr;
         }
 
         byte* opstoi(byte* addr_ptr, int_op a, int_op b) {
             /*  Inserts stoi instruction to bytecode.
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, STOI, a, b);
+            *(addr_ptr++) = STOI;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, a);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, b);
             return addr_ptr;
         }
 
         byte* opstof(byte* addr_ptr, int_op a, int_op b) {
             /*  Inserts stof instruction to bytecode.
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, STOF, a, b);
+            *(addr_ptr++) = STOF;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, a);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, b);
             return addr_ptr;
         }
 
