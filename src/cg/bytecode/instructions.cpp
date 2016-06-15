@@ -743,9 +743,9 @@ namespace cg {
             /*  Inserts clbing instuction.
              */
             *(addr_ptr++) = ENCLOSE;
-            addr_ptr = insertIntegerOperand(addr_ptr, target_closure);
-            addr_ptr = insertIntegerOperand(addr_ptr, target_register);
-            addr_ptr = insertIntegerOperand(addr_ptr, source_register);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, target_closure);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, target_register);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, source_register);
             return addr_ptr;
         }
 
@@ -753,9 +753,9 @@ namespace cg {
             /*  Inserts enclosecopy instuction.
              */
             *(addr_ptr++) = ENCLOSECOPY;
-            addr_ptr = insertIntegerOperand(addr_ptr, target_closure);
-            addr_ptr = insertIntegerOperand(addr_ptr, target_register);
-            addr_ptr = insertIntegerOperand(addr_ptr, source_register);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, target_closure);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, target_register);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, source_register);
             return addr_ptr;
         }
 
@@ -763,9 +763,9 @@ namespace cg {
             /*  Inserts openclosemove instuction.
              */
             *(addr_ptr++) = ENCLOSEMOVE;
-            addr_ptr = insertIntegerOperand(addr_ptr, target_closure);
-            addr_ptr = insertIntegerOperand(addr_ptr, target_register);
-            addr_ptr = insertIntegerOperand(addr_ptr, source_register);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, target_closure);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, target_register);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, source_register);
             return addr_ptr;
         }
 
@@ -773,7 +773,7 @@ namespace cg {
             /*  Inserts closure instuction.
              */
             *(addr_ptr++) = CLOSURE;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             addr_ptr = insertString(addr_ptr, fn);
             return addr_ptr;
         }
