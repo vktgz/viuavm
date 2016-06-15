@@ -64,15 +64,6 @@ static byte* insertRegisterIndexOperand(byte* addr_ptr, int_op op) {
     return addr_ptr;
 }
 
-static byte* insertTwoIntegerOpsInstruction(byte* addr_ptr, enum OPCODE instruction, int_op a, int_op b) {
-    /** Insert instruction with two integer operands.
-     */
-    *(addr_ptr++) = instruction;
-    addr_ptr = insertIntegerOperand(addr_ptr, a);
-    addr_ptr = insertIntegerOperand(addr_ptr, b);
-    return addr_ptr;
-}
-
 static byte* insertThreeIntegerOpsInstruction(byte* addr_ptr, enum OPCODE instruction, int_op a, int_op b, int_op c) {
     /** Insert instruction with two integer operands.
      */
