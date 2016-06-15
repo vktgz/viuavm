@@ -727,7 +727,7 @@ namespace cg {
             /*  Inserts print instuction.
              */
             *(addr_ptr++) = PRINT;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             return addr_ptr;
         }
 
@@ -735,7 +735,7 @@ namespace cg {
             /*  Inserts echo instuction.
              */
             *(addr_ptr++) = ECHO;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             return addr_ptr;
         }
 
