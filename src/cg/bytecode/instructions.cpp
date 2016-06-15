@@ -292,7 +292,7 @@ namespace cg {
              *  f     - value to store
              */
             *(addr_ptr++) = FSTORE;
-            addr_ptr = insertIntegerOperand(addr_ptr, regno);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regno);
             *(reinterpret_cast<float*>(addr_ptr))  = f;
             pointer::inc<float, byte>(addr_ptr);
 
@@ -308,7 +308,10 @@ namespace cg {
              *  regb    - register index of second operand
              *  regr    - register index in which to store the result
              */
-            addr_ptr = insertThreeIntegerOpsInstruction(addr_ptr, FADD, rega, regb, regr);
+            *(addr_ptr++) = FADD;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, rega);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regb);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regr);
             return addr_ptr;
         }
 
@@ -321,7 +324,10 @@ namespace cg {
              *  regb    - register index of second operand
              *  regr    - register index in which to store the result
              */
-            addr_ptr = insertThreeIntegerOpsInstruction(addr_ptr, FSUB, rega, regb, regr);
+            *(addr_ptr++) = FSUB;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, rega);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regb);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regr);
             return addr_ptr;
         }
 
@@ -334,7 +340,10 @@ namespace cg {
              *  regb    - register index of second operand
              *  regr    - register index in which to store the result
              */
-            addr_ptr = insertThreeIntegerOpsInstruction(addr_ptr, FMUL, rega, regb, regr);
+            *(addr_ptr++) = FMUL;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, rega);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regb);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regr);
             return addr_ptr;
         }
 
@@ -347,7 +356,10 @@ namespace cg {
              *  regb    - register index of second operand
              *  regr    - register index in which to store the result
              */
-            addr_ptr = insertThreeIntegerOpsInstruction(addr_ptr, FDIV, rega, regb, regr);
+            *(addr_ptr++) = FDIV;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, rega);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regb);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regr);
             return addr_ptr;
         }
 
@@ -360,7 +372,10 @@ namespace cg {
              *  regb    - register index of second operand
              *  regr    - register index in which to store the result
              */
-            addr_ptr = insertThreeIntegerOpsInstruction(addr_ptr, FLT, rega, regb, regr);
+            *(addr_ptr++) = FLT;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, rega);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regb);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regr);
             return addr_ptr;
         }
 
@@ -373,7 +388,10 @@ namespace cg {
              *  regb    - register index of second operand
              *  regr    - register index in which to store the result
              */
-            addr_ptr = insertThreeIntegerOpsInstruction(addr_ptr, FLTE, rega, regb, regr);
+            *(addr_ptr++) = FLTE;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, rega);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regb);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regr);
             return addr_ptr;
         }
 
@@ -386,7 +404,10 @@ namespace cg {
              *  regb    - register index of second operand
              *  regr    - register index in which to store the resugt
              */
-            addr_ptr = insertThreeIntegerOpsInstruction(addr_ptr, FGT, rega, regb, regr);
+            *(addr_ptr++) = FGT;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, rega);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regb);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regr);
             return addr_ptr;
         }
 
@@ -399,7 +420,10 @@ namespace cg {
              *  regb    - register index of second operand
              *  regr    - register index in which to store the resugt
              */
-            addr_ptr = insertThreeIntegerOpsInstruction(addr_ptr, FGTE, rega, regb, regr);
+            *(addr_ptr++) = FGTE;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, rega);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regb);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regr);
             return addr_ptr;
         }
 
@@ -412,7 +436,10 @@ namespace cg {
              *  regb    - register index of second operand
              *  regr    - register index in which to store the resugt
              */
-            addr_ptr = insertThreeIntegerOpsInstruction(addr_ptr, FEQ, rega, regb, regr);
+            *(addr_ptr++) = FEQ;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, rega);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regb);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regr);
             return addr_ptr;
         }
 
