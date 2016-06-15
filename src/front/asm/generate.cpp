@@ -651,7 +651,7 @@ Program& compile(Program& program, const vector<string>& lines, map<string, int>
                 throw ("unimplemented instruction: " + instr);
             }
         } catch (const string& e) {
-            throw std::pair<decltype(i), const string&>(i, e);
+            throw std::pair<decltype(i), const string>(i, e);
         }
         ++instruction;
     }
@@ -1186,7 +1186,7 @@ int generate(const vector<string>& expanded_lines, const map<long unsigned, long
         } catch (const char*& e) {
             cout << (DEBUG ? "\n" : "") << "fatal: error during assembling: " << e << endl;
             exit(1);
-        } catch (const std::pair<unsigned long, const string&>& e) {
+        } catch (const std::pair<unsigned long, const string>& e) {
             cout << (DEBUG ? "\n" : "") << filename << ": error in function " << name << " (at instruction " << e.first+1 << "): " << e.second << endl;
             exit(1);
         } catch (const std::out_of_range& e) {
