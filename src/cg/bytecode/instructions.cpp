@@ -1003,7 +1003,7 @@ namespace cg {
             /*  Inserts class instuction.
              */
             *(addr_ptr++) = CLASS;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             addr_ptr = insertString(addr_ptr, class_name);
             return addr_ptr;
         }
@@ -1012,7 +1012,7 @@ namespace cg {
             /*  Inserts derive instuction.
              */
             *(addr_ptr++) = DERIVE;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             addr_ptr = insertString(addr_ptr, base_class_name);
             return addr_ptr;
         }
@@ -1021,7 +1021,7 @@ namespace cg {
             /*  Inserts derive instuction.
              */
             *(addr_ptr++) = ATTACH;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             addr_ptr = insertString(addr_ptr, function_name);
             addr_ptr = insertString(addr_ptr, method_name);
             return addr_ptr;
@@ -1031,7 +1031,7 @@ namespace cg {
             /*  Inserts register instuction.
              */
             *(addr_ptr++) = REGISTER;
-            addr_ptr = insertIntegerOperand(addr_ptr, regno);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regno);
             return addr_ptr;
         }
 
