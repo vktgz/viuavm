@@ -117,7 +117,9 @@ namespace cg {
              *  regno:int - register number
              *  i:int     - value to store
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, ISTORE, regno, i);
+            *(addr_ptr++) = ISTORE;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regno);
+            addr_ptr = insertIntegerOperand(addr_ptr, i);
             return addr_ptr;
         }
 
