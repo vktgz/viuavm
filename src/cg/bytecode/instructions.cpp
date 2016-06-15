@@ -615,7 +615,9 @@ namespace cg {
              *  a - register number (move from...)
              *  b - register number (move to...)
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, MOVE, a, b);
+            *(addr_ptr++) = MOVE;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, a);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, b);
             return addr_ptr;
         }
 
@@ -627,12 +629,16 @@ namespace cg {
              *  a - register number (copy from...)
              *  b - register number (copy to...)
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, COPY, a, b);
+            *(addr_ptr++) = COPY;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, a);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, b);
             return addr_ptr;
         }
 
         byte* opptr(byte* addr_ptr, int_op a, int_op b) {
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, PTR, a, b);
+            *(addr_ptr++) = PTR;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, a);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, b);
             return addr_ptr;
         }
 
@@ -644,13 +650,15 @@ namespace cg {
              *  a - register number
              *  b - register number
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, SWAP, a, b);
+            *(addr_ptr++) = SWAP;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, a);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, b);
             return addr_ptr;
         }
 
         byte* opdelete(byte* addr_ptr, int_op reg) {
             *(addr_ptr++) = DELETE;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             return addr_ptr;
         }
 
@@ -658,7 +666,7 @@ namespace cg {
             /*  Inserts empty instuction.
              */
             *(addr_ptr++) = EMPTY;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             return addr_ptr;
         }
 
@@ -670,7 +678,9 @@ namespace cg {
              *  a - register number
              *  b - register number
              */
-            addr_ptr = insertTwoIntegerOpsInstruction(addr_ptr, ISNULL, a, b);
+            *(addr_ptr++) = ISNULL;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, a);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, b);
             return addr_ptr;
         }
 
