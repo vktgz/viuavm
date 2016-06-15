@@ -972,7 +972,7 @@ namespace cg {
             /*  Inserts throw instuction.
              */
             *(addr_ptr++) = THROW;
-            addr_ptr = insertIntegerOperand(addr_ptr, regno);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regno);
             return addr_ptr;
         }
 
