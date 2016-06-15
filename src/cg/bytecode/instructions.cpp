@@ -506,7 +506,7 @@ namespace cg {
             /*  Inserts strstore instruction.
              */
             *(addr_ptr++) = STRSTORE;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             addr_ptr = insertString(addr_ptr, s.substr(1, s.size()-2));
             return addr_ptr;
         }
