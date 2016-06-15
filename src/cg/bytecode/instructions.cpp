@@ -1039,7 +1039,7 @@ namespace cg {
             /*  Inserts new instuction.
              */
             *(addr_ptr++) = NEW;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             addr_ptr = insertString(addr_ptr, class_name);
             return addr_ptr;
         }
@@ -1048,18 +1048,24 @@ namespace cg {
             /*  Inserts msg instuction.
              */
             *(addr_ptr++) = MSG;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             addr_ptr = insertString(addr_ptr, method_name);
             return addr_ptr;
         }
 
         byte* opinsert(byte* addr_ptr, int_op rega, int_op regb, int_op regr) {
-            addr_ptr = insertThreeIntegerOpsInstruction(addr_ptr, INSERT, rega, regb, regr);
+            *(addr_ptr++) = INSERT;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, rega);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regb);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regr);
             return addr_ptr;
         }
 
         byte* opremove(byte* addr_ptr, int_op rega, int_op regb, int_op regr) {
-            addr_ptr = insertThreeIntegerOpsInstruction(addr_ptr, REMOVE, rega, regb, regr);
+            *(addr_ptr++) = REMOVE;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, rega);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regb);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regr);
             return addr_ptr;
         }
 
