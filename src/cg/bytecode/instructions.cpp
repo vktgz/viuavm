@@ -63,8 +63,7 @@ static byte* insertRegisterIndexOperand(byte* addr_ptr, int_op op) {
     }
     pointer::inc<OperandType, byte>(addr_ptr);
 
-    // FIXME: the reassignment here is because in the future the index will be unsigned
-    int index = num;
+    unsigned index = static_cast<unsigned>(num);
     *(reinterpret_cast<decltype(index)*>(addr_ptr)) = index;
     pointer::inc<decltype(index), byte>(addr_ptr);
 

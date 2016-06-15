@@ -24,6 +24,7 @@ There are several categories of change:
 - **feature**: resereved for new features implemented in the VM, e.g. a new
   instruction, or a new feature in a standard library
 - **misc**: various other changes not really fitting into any other category,
+- **vm**: changes done to machine's core, not related to higher-level user code,
 
 
 ----
@@ -33,6 +34,7 @@ There are several categories of change:
 
 - enhancement: VM is able to restart watchdog even with no stack trace available,
 - bic: floats are stringified using the `std::fixed` modifier, which limits decimal digits,
+- vm: register bytecode representation changed - indexes are encoded as unsigned integers,
 
 
 ----

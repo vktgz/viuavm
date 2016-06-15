@@ -53,12 +53,12 @@ unique_ptr<viua::operand::Operand> viua::operand::extract(byte*& ip) {
     unique_ptr<viua::operand::Operand> operand;
     switch (ot) {
         case OT_REGISTER_INDEX:
-            operand.reset(new RegisterIndex(static_cast<unsigned>(*reinterpret_cast<int*>(ip))));
-            ip += sizeof(int);
+            operand.reset(new RegisterIndex(*reinterpret_cast<unsigned*>(ip)));
+            ip += sizeof(unsigned);
             break;
         case OT_REGISTER_REFERENCE:
-            operand.reset(new RegisterReference(static_cast<unsigned>(*reinterpret_cast<int*>(ip))));
-            ip += sizeof(int);
+            operand.reset(new RegisterReference(*reinterpret_cast<unsigned*>(ip)));
+            ip += sizeof(unsigned);
             break;
         case OT_ATOM:
             operand.reset(new Atom(string(reinterpret_cast<char*>(ip))));
