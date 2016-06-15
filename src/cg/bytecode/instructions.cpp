@@ -571,7 +571,7 @@ namespace cg {
             /*  Inserts not instuction.
              */
             *(addr_ptr++) = NOT;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             return addr_ptr;
         }
 
@@ -584,7 +584,10 @@ namespace cg {
              *  rega   - register index of first operand
              *  regb   - register index of second operand
              */
-            addr_ptr = insertThreeIntegerOpsInstruction(addr_ptr, AND, regr, rega, regb);
+            *(addr_ptr++) = AND;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regr);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, rega);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regb);
             return addr_ptr;
         }
 
@@ -597,7 +600,10 @@ namespace cg {
              *  rega   - register index of first operand
              *  regb   - register index of second operand
              */
-            addr_ptr = insertThreeIntegerOpsInstruction(addr_ptr, OR, regr, rega, regb);
+            *(addr_ptr++) = OR;
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regr);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, rega);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, regb);
             return addr_ptr;
         }
 
