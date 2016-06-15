@@ -711,7 +711,7 @@ namespace cg {
             /*  Inserts tmpri instuction.
              */
             *(addr_ptr++) = TMPRI;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             return addr_ptr;
         }
 
@@ -719,7 +719,7 @@ namespace cg {
             /*  Inserts tmpro instuction.
              */
             *(addr_ptr++) = TMPRO;
-            addr_ptr = insertIntegerOperand(addr_ptr, reg);
+            addr_ptr = insertRegisterIndexOperand(addr_ptr, reg);
             return addr_ptr;
         }
 
