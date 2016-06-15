@@ -1,3 +1,4 @@
+#include <sstream>
 #include <viua/cg/bytecode/instructions.h>
 #include <viua/bytecode/operand_types.h>
 using namespace std;
@@ -44,6 +45,12 @@ static byte* insertRegisterIndexOperand(byte* addr_ptr, int_op op) {
     int num;
 
     tie(ref, num) = op;
+
+    if (num < 0) {
+        ostringstream oss;
+        oss << "invalid register index (cannot be negative): " << num;
+        throw oss.str();
+    }
 
     /* NOTICE: reinterpret_cast<>'s are ugly, but we know what we're doing here.
      * Since we store everything in a big array of bytes we have to cast incompatible pointers to
