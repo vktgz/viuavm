@@ -72,6 +72,7 @@ namespace viua {
         std::string extractString(byte*& ip);
         unsigned getRegisterIndex(Operand*, Process*);
         int getInteger(Operand*, Process*);
+        int getPrimitiveInteger(Operand*, Process*);
     }
 }
 

@@ -90,3 +90,14 @@ unsigned viua::operand::getRegisterIndex(viua::operand::Operand* o, Process* t) 
     }
     return index;
 }
+
+int viua::operand::getPrimitiveInteger(viua::operand::Operand* o, Process*) {
+    int integer = 0;
+    if (viua::operand::Int* i = dynamic_cast<viua::operand::Int*>(o)) {
+        integer = i->get();
+    } else {
+        throw new Exception("invalid operand type");
+    }
+    return integer;
+}
+
