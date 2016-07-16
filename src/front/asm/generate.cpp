@@ -1257,7 +1257,6 @@ int generate(const vector<string>& expanded_lines, const map<long unsigned, long
 
     bwrite(out, meta_information_map_size);
     for (auto each : meta_information_map) {
-        cout << each.first << ": '" << each.second << "'" << endl;
         out.write(each.first.c_str(), each.first.size());
         out.put('\0');
         out.write(each.second.c_str(), each.second.size());
