@@ -17,6 +17,8 @@
 ;   along with Viua VM.  If not, see <http://www.gnu.org/licenses/>.
 ;
 
+.info: text "Hello\nWorld!"
+
 .function: main/1
     print (strstore 1 "Hello World!")
     izero 0
