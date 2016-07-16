@@ -67,6 +67,7 @@ bool usage(const char* program, bool show_help, bool show_version, bool verbose)
              << "    " << "-e, --with-entry         - include " << ENTRY_FUNCTION_NAME << " function in disassembly\n"
              << "    " << "-L, --line-by-line       - display output line by line\n"
              << "    " << "-F, --function <name>    - disassemble only selected function\n"
+             << "    " << "    --meta               - display meta information and exit\n"
              ;
     }
 
@@ -80,6 +81,8 @@ int main(int argc, char* argv[]) {
 
     // for getline()
     string dummy;
+
+    bool show_meta_and_quit = false;
 
     string filename = "";
     string disasmname = "";
@@ -113,6 +116,8 @@ int main(int argc, char* argv[]) {
                 exit(1);
             }
             continue;
+        } else if (option == "--meta") {
+            show_meta_and_quit = true;
         } else if (str::startswith(option, "-")) {
             cout << "error: unknown option: " << option << endl;
             return 1;
@@ -146,6 +151,14 @@ int main(int argc, char* argv[]) {
     } catch (const string& e) {
         cout << e << endl;
         return 1;
+    }
+
+    auto meta_information = loader.getMetaInformation();
+    if (show_meta_and_quit) {
+        for (const auto each : meta_information) {
+            cout << each.first << ": " << str::enquote(str::strencode(each.second)) << endl;
+        }
+        return 0;
     }
 
     uint64_t bytes = loader.getBytecodeSize();
@@ -215,7 +228,6 @@ int main(int argc, char* argv[]) {
         disassembled_lines.push_back(oss.str());
     }
 
-    auto meta_information = loader.getMetaInformation();
     if (meta_information.size()) {
         disassembled_lines.push_back("; meta information\n");
     }
