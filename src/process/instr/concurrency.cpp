@@ -48,9 +48,9 @@ viua::internals::types::byte* viua::process::Process::opprocess(viua::internals:
         throw new viua::types::Exception("call to undefined function: " + call_name);
     }
 
-    stack.frame_new->function_name = call_name;
+    current_stack()->frame_new->function_name = call_name;
 
-    auto spawned_process = scheduler->spawn(std::move(stack.frame_new), this, target_is_void);
+    auto spawned_process = scheduler->spawn(std::move(current_stack()->frame_new), this, target_is_void);
     if (not target_is_void) {
         *target = unique_ptr<viua::types::Type>{new viua::types::Process(spawned_process)};
     }
@@ -93,7 +93,7 @@ viua::internals::types::byte* viua::process::Process::opjoin(viua::internals::ty
             thrd->join();
             return_addr = addr;
             if (thrd->terminated()) {
-                stack.thrown = thrd->transferActiveException();
+                current_stack()->thrown = thrd->transferActiveException();
             }
             if (not target_is_void) {
                 *target = thrd->getReturnValue();
@@ -101,7 +101,7 @@ viua::internals::types::byte* viua::process::Process::opjoin(viua::internals::ty
         } else if (timeout_active and (not wait_until_infinity) and (waiting_until < std::chrono::steady_clock::now())) {
             timeout_active = false;
             wait_until_infinity = false;
-            stack.thrown.reset(new viua::types::Exception("process did not join"));
+            current_stack()->thrown.reset(new viua::types::Exception("process did not join"));
             return_addr = addr;
         }
     } else {
@@ -172,7 +172,7 @@ viua::internals::types::byte* viua::process::Process::opreceive(viua::internals:
         if (timeout_active and (not wait_until_infinity) and (waiting_until < std::chrono::steady_clock::now())) {
             timeout_active = false;
             wait_until_infinity = false;
-            stack.thrown.reset(new viua::types::Exception("no message received"));
+            current_stack()->thrown.reset(new viua::types::Exception("no message received"));
             return_addr = addr;
         }
     }

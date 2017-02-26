@@ -104,7 +104,7 @@ viua::internals::types::byte* viua::process::Process::opcapturemove(viua::intern
 viua::internals::types::byte* viua::process::Process::opclosure(viua::internals::types::byte* addr) {
     /** Create a closure from a function.
      */
-    if (currently_used_register_set != stack.back()->local_register_set.get()) {
+    if (currently_used_register_set != current_stack()->back()->local_register_set.get()) {
         throw new viua::types::Exception("creating closures from nonlocal registers is forbidden");
     }
 
@@ -172,16 +172,16 @@ viua::internals::types::byte* viua::process::Process::opfcall(viua::internals::t
     // save return address for frame
     viua::internals::types::byte* return_address = addr;
 
-    if (stack.frame_new == nullptr) {
+    if (current_stack()->frame_new == nullptr) {
         throw new viua::types::Exception("fcall without a frame: use `frame 0' in source code if the function takes no parameters");
     }
 
-    stack.frame_new->function_name = call_name;
-    stack.frame_new->return_address = return_address;
-    stack.frame_new->return_register = return_register;
+    current_stack()->frame_new->function_name = call_name;
+    current_stack()->frame_new->return_address = return_address;
+    current_stack()->frame_new->return_register = return_register;
 
     if (fn->type() == "Closure") {
-        stack.frame_new->setLocalRegisterSet(static_cast<viua::types::Closure*>(fn)->rs(), false);
+        current_stack()->frame_new->setLocalRegisterSet(static_cast<viua::types::Closure*>(fn)->rs(), false);
     }
 
     pushFrame();

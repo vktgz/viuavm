@@ -151,6 +151,7 @@ namespace viua {
 
             // Call stack
             Stack stack;
+            auto current_stack() const -> Stack*;
 
             std::queue<std::unique_ptr<viua::types::Type>> message_queue;
 
