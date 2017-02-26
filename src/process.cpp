@@ -212,7 +212,10 @@ auto viua::process::Stack::push_prepared_frame() -> void {
 
 
 auto viua::process::Process::current_stack() const -> Stack* {
-    return const_cast<Stack*>(&stack);
+    if (activations.empty()) {
+        throw new viua::types::Exception("no stack available");
+    }
+    return activations.back();
 }
 
 
@@ -569,7 +572,7 @@ auto viua::process::Process::executionAt() const -> decltype(current_stack()->in
 
 vector<Frame*> viua::process::Process::trace() const {
     vector<Frame*> tr;
-    for (auto& each : stack) {
+    for (auto& each : (*current_stack())) {
         tr.push_back(each.get());
     }
     return tr;
@@ -593,17 +596,45 @@ void viua::process::Process::migrate_to(viua::scheduler::VirtualProcessScheduler
     scheduler = sch;
 }
 
+auto viua::process::Process::spawn_stack(const string function_name) -> Stack* {
+    unique_ptr<Stack> new_stack { new Stack(function_name, &currently_used_register_set, global_register_set.get(), scheduler) } ;
+    Stack* key = new_stack.get();
+    stacks.emplace(key, std::move(new_stack));
+    return key;
+}
+
 viua::process::Process::Process(unique_ptr<Frame> frm, viua::scheduler::VirtualProcessScheduler *sch, viua::process::Process* pt): scheduler(sch), parent_process(pt),
     global_register_set(nullptr), currently_used_register_set(nullptr),
-    stack(frm->function_name, &currently_used_register_set, global_register_set.get(), scheduler),
     finished(false), is_joinable(true),
     is_suspended(false),
     process_priority(1),
     process_id(this),
     is_hidden(false)
 {
+    /*
+     *  Initialise global register set.
+     *  This has to be done before any stack initialisation because stacks use this register set.
+     */
     global_register_set.reset(new viua::kernel::RegisterSet(DEFAULT_REGISTER_SIZE));
+
+    /*
+     *  Spawn the initial stack (initial coroutine of the process), and
+     *  push it on the activation stack.
+     *  This initialises the process by setting a coroutine that can be run inside it.
+     */
+    auto key = spawn_stack(frm->function_name);
+    activations.push_back(key);
+
+    /*
+     *  All processes start running using the local register set.
+     *  Make it so.
+     */
     currently_used_register_set = frm->local_register_set.get();
+
+    /*
+     *  Make current stack runnable: this requires binding it to a process (for global and
+     *  static register sets), and putting the initial frame on it.
+     */
     current_stack()->emplace_back(std::move(frm));
     current_stack()->bind(&currently_used_register_set, global_register_set.get());
 }
