@@ -95,7 +95,11 @@ template < typename T > function max (let seq -> vector<T>) -> T = {
         let value -> T, let rest -> vector<T> = {   // [1] case operator (vector<int>*) -> tuple<boolean, function (mutable vector<T> const *) -> tuple<T, vector<T>>>
             max(value, rest);
         },
-        (let value -> T) = {                        // [2] case operator (vector<int>*) -> tuple<boolean, function (mutable vector<T> const *) -> T>
+        [ value | ...rest ] = { // destructuring non-empty arrays, same as [1]
+        },
+        { value = foo } = {     // destructuring objects: { <bind-as-name> = <key-from-object> }
+        },
+        let value -> T = {                        // [2] case operator (vector<int>*) -> tuple<boolean, function (mutable vector<T> const *) -> T>
             value;
         }
     };
